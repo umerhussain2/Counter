@@ -1,24 +1,64 @@
-import logo from './logo.svg';
-import './App.css';
+import React, { useState } from "react";
+import { MyContext } from "./context/context";
+import "./App.css";
+import Comp1 from "./components/Comp1";
 
 function App() {
+  const [count, setCount] = useState(0);
+
+  const increment = (i) => {
+    setCount(count + i);
+  };
+
+  const decrement = (d) => {
+    if (count === -0) {
+      setCount(0);
+    } else {
+      setCount(count - d);
+    }
+  };
+
+  const reset = () => {
+    setCount(0);
+  };
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <>
+      <MyContext.Provider value={count}>
+        <main className="container">
+          <div className="wrapper">
+            <Comp1 />
+            <h1 className="heading">counter</h1>
+
+            <div className="display-wrapper">
+              <div className="display">{count}</div>
+            </div>
+            <div className="buttons-wrapper">
+              <button
+                onClick={() => decrement(1)}
+                className="action-button value-decrement"
+              >
+                -
+              </button>
+
+              <button
+                onClick={() => reset()}
+                className="action-button value-reset"
+              >
+                Reset
+              </button>
+
+              <button
+                onClick={() => increment(1)}
+                className="action-button value-increment"
+              >
+                +
+              </button>
+            </div>
+          </div>
+        </main>
+      </MyContext.Provider>
+    </>
   );
 }
 
